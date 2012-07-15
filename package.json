@@ -2,7 +2,7 @@
 , "version": "0.1.2"
 , "description": "Connect middleware that adds a unique id to each request."
 , "main": "index.js"
-, "scripts": { "test": "test.js" }
+, "scripts": { "test": "mocha test.js --reporter nyan --ui bdd" }
 , "repository":
   { "type": "git"
   , "url": "git://github.com/chakrit/connect-requestid.git" }
