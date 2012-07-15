@@ -1,25 +1,12 @@
 
-
 // index.js - Main exports file
 (function() {
 
-  var ID_BYTES = 8;
-
-  var crypto = require('crypto')
-    , cache = { };
-
-  // generate new id using secure random bytes
-  var generateNewId = function(callback) {
-    return crypto.randomBytes(ID_BYTES, function(e, buf) {
-      if (e) return callback(e, null);
-
-      return callback(null, buf.toString('hex'));
-    });
-  };
+  var crypto = require('crypto');
 
   // the middleware
-  module.exports = function(req, res, next) {
-    return generateNewId(function(e, newId) {
+  var mw = function(req, resp, next) {
+    return mw.config.newId(function(e, newId) {
       if (!!e) return next(e);
 
       req.id = newId;
@@ -27,8 +14,18 @@
     });
   };
 
-  // export new id function for tesing.
-  module.exports.generateNewId = generateNewId;
+  // generate new id using secure random bytes
+  mw.config = { bytesCount: 8 };
+  mw.config.newId = function(callback) {
+    return crypto.randomBytes(mw.config.bytesCount, function(e, buf) {
+      if (e) return callback(e, null);
+
+      return callback(null, buf.toString('hex'));
+    });
+  };
+
+  // exports the middleware
+  module.exports = mw;
 
 })();
 
