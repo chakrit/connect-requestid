@@ -1,5 +1,5 @@
 { "name": "connect-requestid"
-, "version": "0.2.0"
+, "version": "0.2.1"
 , "description": "Connect middleware that adds a unique id to each request."
 , "main": "index.js"
 , "scripts": { "test": "mocha test.js --reporter nyan --ui bdd" }
@@ -13,5 +13,4 @@
   , "id" ]
 , "author": "Chakrit Wichian <service@chakrit.net> (http://chakrit.net)"
 , "license": "BSD"
-, "engines": { "node": "v0.6.x" }
 }
