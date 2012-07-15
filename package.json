@@ -1,5 +1,5 @@
 { "name": "connect-requestid"
-, "version": "0.1.0-0"
+, "version": "0.1.1"
 , "description": "Connect middleware that adds a unique id to each request."
 , "main": "index.js"
 , "scripts": { "test": "test.js" }
