@@ -3,7 +3,7 @@
 // index.js - Main exports file
 (function() {
 
-  var ID_BYTES = 32;
+  var ID_BYTES = 8;
 
   var crypto = require('crypto')
     , cache = { };
