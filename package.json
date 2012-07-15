@@ -1,0 +1,17 @@
+{ "name": "connect-requestid"
+, "version": "0.1.0-0"
+, "description": "Connect middleware that adds a unique id to each request."
+, "main": "index.js"
+, "scripts": { "test": "test.js" }
+, "repository":
+  { "type": "git"
+  , "url": "git://github.com/chakrit/connect-requestid.git" }
+, "keywords":
+  [ "connect"
+  , "middleware"
+  , "request"
+  , "id" ]
+, "author": "Chakrit Wichian <service@chakrit.net> (http://chakrit.net)"
+, "license": "BSD"
+, "engines": { "node": "v0.6.x" }
+}
