@@ -2,7 +2,7 @@
 // test.js - Test index.js
 (function() {
 
-  var MAGNITUDE = 5000;
+  var MAGNITUDE = 10000;
 
   var tap = require('tap')
     , sinon = require('sinon');
