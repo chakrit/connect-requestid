@@ -1,16 +1,28 @@
-{ "name": "connect-requestid"
-, "version": "0.2.1"
-, "description": "Connect middleware that adds a unique id to each request."
-, "main": "index.js"
-, "scripts": { "test": "mocha test.js --reporter nyan --ui bdd" }
-, "repository":
-  { "type": "git"
-  , "url": "git://github.com/chakrit/connect-requestid.git" }
-, "keywords":
-  [ "connect"
-  , "middleware"
-  , "request"
-  , "id" ]
-, "author": "Chakrit Wichian <service@chakrit.net> (http://chakrit.net)"
-, "license": "BSD"
+{
+  "name": "connect-requestid",
+  "version": "0.2.1",
+  "description": "Connect middleware that adds a unique id to each request.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/tap ./test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chakrit/connect-requestid.git"
+  },
+  "keywords": [
+    "connect",
+    "middleware",
+    "request",
+    "id"
+  ],
+  "author": "Chakrit Wichian <service@chakrit.net> (http://chakrit.net)",
+  "license": "BSD",
+  "devDependencies": {
+    "tap": "~0.4.4",
+    "sinon": "~1.7.3"
+  },
+  "dependencies": {
+    "uuid": "~1.4.1"
+  }
 }
