@@ -1,110 +1,49 @@
 
 // test.js - Test index.js
-// NOTE: must be run usingmocha (http://visionmedia.github.com/mocha/)
 (function() {
 
-  // check for mocha context
-  if (!describe || !it) {
-    console.log("This file is intended to be run using mocha:");
-    console.log("    http://visionmedia.github.com/mocha/");
-    return;
-  }
+  var tap = require('tap')
+    , sinon = require('sinon');
 
+  tap.test('module exports', function(t) {
 
-  var index = require('./index')
-    , assert = require('assert');
+    var reqId = require('./index');
 
-  // general tests
-  describe('index.js', function() {
-    describe('exports', function() {
-      it('a middleware function', function() {
-        assert(typeof index === 'function');
-        assert(index.length === 3);
-      });
+    t.type(reqId, 'function', 'is a function');
+    t.equal(reqId.length, 3, 'accepts 3 arguments');
 
-      it('and a configuration object', function() {
-        assert('config' in index);
-        assert(typeof index.config === 'object');
-      });
-    });
-  });
+    t.test('generator function', function(t) {
+      t.type(reqId.generator, 'function', 'is modifiable');
 
-  // config object
-  describe('config object', function() {
-    var config = index.config;
-
-    describe('should exports', function() {
-      it('a newId(callback) function', function() {
-        assert('newId' in config);
-        assert(typeof config['newId'] === 'function');
-        assert(config['newId'].length === 1);
-      });
-
-      it('a bytesCount number', function() {
-        assert('bytesCount' in config);
-        assert(typeof config['bytesCount'] === 'number');
-      });
-
-      it('default bytesCount to 8', function() {
-        assert(config.bytesCount === 8);
+      sinon.spy(reqId, 'generator');
+      reqId({ }, null, function() {
+        t.ok(reqId.generator.called, 'called when middleware is invoked');
+        t.end();
       });
     });
 
-    describe('default newId function', function() {
-      describe('should generates', function() {
-        it('a string id', function(done) {
-          config.newId(function(e, newId) {
-            assert(!e);
-            assert(!!newId);
-            assert(typeof newId === 'string');
-            done();
-          });
+    t.test('middleware called', function(t) {
+      var req = { };
+      reqId(req, null, function() {
+        t.type(req.id, 'string', 'an id is gnerated');
+        t.end();
+      });
+    });
+
+    t.test('1000 iteration', function(t) {
+      var i, cache = Object.create(null);
+
+      t.plan(1000);
+      for (i = 0; i < 1000; i++) (function(req, i) {
+        reqId(req, null, function() {
+          t.notOk(cache[req.id], 'id is unique for iteration: #' + i);
+          cache[req.id] = true;
         });
-
-        it('id with a length of bytesCount * 2', function(done) {
-          var oldBytesCount = config.bytesCount;
-          config.bytesCount = 2;
-          config.newId(function(e, newId) {
-            assert(!e);
-            assert(!!newId);
-            assert(newId.length === config.bytesCount * 2);
-
-            config.bytesCount = oldBytesCount;
-            done();
-          });
-        });
-      });
+      })({ }, i);
     });
 
-  });
+    t.end()
 
-  // main middleware function
-  describe('middleware function', function() {
-    it('should generates an id', function(done) {
-      var obj = { };
-
-      index(obj, null, function(e) {
-        if (!!e) return done(e);
-
-        assert('id' in obj);
-        assert(typeof obj['id'] === 'string');
-        done();
-      });
-    });
-
-    describe('when error', function() {
-      it('should calls next middleware with error', function(done) {
-        var oldConfig = index.config;
-        index.config = { newId: function(cb) { cb('error', null); } };
-
-        index({ }, null, function(e) {
-          assert(!!e);
-
-          index.config = oldConfig;
-          done();
-        });
-      });
-    });
   });
 
 })();
