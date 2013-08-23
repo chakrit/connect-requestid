@@ -2,7 +2,7 @@
 // index.js - Main exports file
 module.exports = (function() {
 
-  var uuid = require('uuid').v1
+  var uuid = require('uuid').v4
     , Buffer = require('buffer').Buffer
     , buffer = new Buffer(16);
 
