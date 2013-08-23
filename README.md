@@ -17,12 +17,14 @@ Access the request id object with `request.id` like this:
       resp.send('hello request #' + req.id);
     });
 
-### CONFIG
+### GENERATOR
 
-The following options are available for configuration:
+The id is generated from the `require('connect-requestid').generator` function. This
+function will by default uses the [node-uuid][0] module to generates 16 bytes of a unique
+identifier each time it is called.
 
-* `middleware.config.bytesCount` - The number of bytes to use in the default newId function.
-* `middleware.config.newId` - `function(callback(e, newId))` to use for generating a new id.
+You can replace this function with your own custom implementation with the signature
+`generator(callback)` and calls the callback function with the standard `callback(e,
+string)` to return the generated id.
 
-The default `newId` function generates a new id using node's `require('crypto').randomBytes` method.
-
+ [0]: https://github.com/broofa/node-uuid
