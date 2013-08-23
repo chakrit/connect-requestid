@@ -2,6 +2,8 @@
 // test.js - Test index.js
 (function() {
 
+  var MAGNITUDE = 5000;
+
   var tap = require('tap')
     , sinon = require('sinon');
 
@@ -30,11 +32,11 @@
       });
     });
 
-    t.test('1000 iteration', function(t) {
+    t.test(MAGNITUDE + ' iterations', function(t) {
       var i, cache = Object.create(null);
 
-      t.plan(1000);
-      for (i = 0; i < 1000; i++) (function(req, i) {
+      t.plan(MAGNITUDE);
+      for (i = 0; i < MAGNITUDE; i++) (function(req, i) {
         reqId(req, null, function() {
           t.notOk(cache[req.id], 'id is unique for iteration: #' + i);
           cache[req.id] = true;
