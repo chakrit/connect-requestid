@@ -15,7 +15,7 @@ module.exports = (function() {
 
   function middleware(req, resp, next) {
     return middleware.generator(function(e, newId) {
-      if (!!e) return next(e);
+      if (e) return next(e);
 
       req.id = newId;
       next();
