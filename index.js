@@ -18,6 +18,7 @@ module.exports = (function() {
       if (e) return next(e);
 
       req.id = newId;
+      resp.setHeader('X-Request-Id', newId);
       next();
     });
   };
