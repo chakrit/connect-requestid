@@ -1,7 +1,8 @@
 [![build status](https://secure.travis-ci.org/chakrit/connect-requestid.png)](http://travis-ci.org/chakrit/connect-requestid)
 
 This package is useful for correlating your log messages across multiple requests
-(if you emit multiple log entries for each request).
+(if you emit multiple log entries for each request). Also sets `X-Request-Id` header
+automatically in response (credit: @Inf0rmer)
 
 ### HOWTO
 
