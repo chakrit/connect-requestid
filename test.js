@@ -6,9 +6,7 @@
 
   var tap = require('tap')
     , sinon = require('sinon')
-    , mockResponse = {
-      "setHeader": Function.apply()
-    }
+    , resp = { 'setHeader': function() { } };
 
   tap.test('module exports', function(t) {
 
@@ -21,16 +19,20 @@
       t.type(reqId.generator, 'function', 'is modifiable');
 
       sinon.spy(reqId, 'generator');
-      reqId({ }, mockResponse, function() {
+      reqId({ }, resp, function() {
         t.ok(reqId.generator.called, 'called when middleware is invoked');
+        reqId.generator.restore()
         t.end();
       });
     });
 
     t.test('middleware called', function(t) {
       var req = { };
-      reqId(req, mockResponse, function() {
+
+      sinon.spy(resp, 'setHeader')
+      reqId(req, resp, function() {
         t.type(req.id, 'string', 'an id is gnerated');
+        t.ok(resp.setHeader.calledWith('X-Request-Id'), 'X-Request-Id header set');
         t.end();
       });
     });
@@ -40,7 +42,7 @@
 
       t.plan(MAGNITUDE);
       for (i = 0; i < MAGNITUDE; i++) (function(req, i) {
-        reqId(req, mockResponse, function() {
+        reqId(req, resp, function() {
           t.notOk(cache[req.id], 'id is unique for iteration: #' + i);
           cache[req.id] = true;
         });
